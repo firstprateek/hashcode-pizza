@@ -178,7 +178,7 @@ class Solution:
           print('PIZZA: {}'.format(self.pizza))
 
     print('slices: {}'.format(self.slices))
-
+    return self.slices
     
 if __name__ == "__main__":
   # Parse input and create pizza matrix -----
@@ -198,5 +198,8 @@ if __name__ == "__main__":
   result = solution.solve()
 
   # Write result to output file -----
-
+  with open("output.txt", 'w') as f:
+    f.write("{}\n".format(len(result)))
+    for coord in result:
+      f.write("{} {} {} {}\n".format(coord[0][0], coord[0][1], coord[1][0], coord[1][1]))
   # ----- ----- ----- ----- ----- ----- -----
