@@ -31,6 +31,7 @@ class Solution:
     count[self.lower_item] += 1
     self.pizza[row] = self.pizza[row][:col] + 'X' + self.pizza[row][col + 1:]
 
+    self.total_score += 1
     # step 2 exapnd around lower item until you satisfy l
     # mark areas already cut
     # try to maximise and reach h in a slice
@@ -81,6 +82,7 @@ class Solution:
           # set to X everyone in the new_row
           # code.interact(local=dict(globals(), **locals()))
           self.pizza[corners[0][0]] = self.pizza[corners[0][0]][:corners[0][1]] + 'X' * len(new_row) + self.pizza[corners[0][0]][corners[1][1] + 1:]
+          self.total_score += len(new_row)
         elif direction == 1:
           print("went - right")
           #code.interact(local=dict(globals(), **locals()))
@@ -101,6 +103,7 @@ class Solution:
           # set to X everyone in the new_col
           for row in range(corners[1][0], corners[2][0] + 1):
             self.pizza[row] = self.pizza[row][:-1] + 'X'
+            self.total_score += 1
         elif direction == 2:
           print("went - bottom")
           # increase the row and then check if lower_item count satisfies
@@ -120,7 +123,7 @@ class Solution:
 
           # set to X everyone in the new_row
           self.pizza[corners[3][0]] = self.pizza[corners[3][0]][:corners[3][1]] + 'X' * len(new_row) + self.pizza[corners[3][0]][corners[2][1] + 1:]
-
+          self.total_score += len(new_row)
         elif direction == 3:
           print("went - left")
           # check if lower item counts satisfy -- implement later
@@ -142,6 +145,7 @@ class Solution:
           # set to X everyone in the new_col
           for row in range(corners[0][0], corners[3][0] + 1):
             self.pizza[row] = 'X' + self.pizza[row][1:]
+            self.total_score += 1
         
         print('PIZZA - INSIDE: {}'.format(self.pizza))
     # check if lower item counts satisfy -- implemented later
@@ -178,6 +182,11 @@ class Solution:
           print('PIZZA: {}'.format(self.pizza))
 
     print('slices: {}'.format(self.slices))
+    
+    print("\n\n-------------FINAL----------------")
+    print("Final Score: {}".format(self.total_score))
+    print("Max Possible Score: {}".format(self.r * self.c))
+    print("------------------------------------\n\n")
     return self.slices
     
 if __name__ == "__main__":
