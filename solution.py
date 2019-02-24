@@ -19,10 +19,25 @@ def solve(r, c, l, h, pizza):
 
   max_slices = lower_item_count // l
 
-  row, col, cur_l = 0, 0, 0
-  
-  
+  # step 1 find a lower_item
+  for row in range(r):
+    for col in range(c):
+      if pizza[row][col] == 'X':
+        continue
 
+      if pizza[row][col] == lower_item:
+        #make_slice(row, col, pizza)
+        print('found {}:{}'.format(row, col))
+  # step 2 exapnd around lower item until you satisfy l
+  # mark areas already cut
+  # try to maximise and reach h in a slice
+  '''
+  -----------
+ | TM |T| TT |
+ | TM |M| MT |
+ | TT |T| TT |
+  -----------
+  '''
 if __name__ == "__main__":
   # Parse input and create pizza matrix -----
   try:
