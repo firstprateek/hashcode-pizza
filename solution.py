@@ -24,7 +24,6 @@ class Solution:
 
   def make_slice(self, row, col):
     expansion = [ True, True, True, True] # Top, Right, Bottom, Left
-    size = 1
     corners = [ [row, col], [row, col], [row, col], [row, col] ] # top - left, top - right, bottom - right, bottom - left
     cur_row, cur_col = row, col
     
@@ -43,7 +42,7 @@ class Solution:
     -----------
     '''
 
-    while any(expansion) and size < self.h:
+    while any(expansion) and sum(count.values()) < self.h:
       for direction in expansion:
         if not direction:
           continue
@@ -143,11 +142,11 @@ class Solution:
 
 
   def solve(self):
-    print("Solving for:\nr: {},\tc: {},\tl: {},\th: {}\npizza: {}\n".format(r, c, l, h, pizza))
+    print("Solving for:\nr: {},\tc: {},\tl: {},\th: {}\npizza: {}\n".format(self.r, self.c, self.l, self.h, self.pizza))
 
     # Find limiting ingredient T or M -----
     number_of_T, number_of_M = 0, 0
-    for row in pizza:
+    for row in self.pizza:
       number_of_T += row.count('T')
       number_of_M += row.count('M')
 
@@ -160,17 +159,16 @@ class Solution:
     print('lower_item: {},\t lower_item_count: {}\n'.format(self.lower_item, self.lower_item_count))
     # ----- ----- ----- ----- ----- ----- -----
 
-    self.max_slices = lower_item_count // l
+    self.max_slices = self.lower_item_count // self.l
 
     # step 1 find a lower_item
-    for row in range(r):
-      for col in range(c):
-        if pizza[row][col] == 'X':
-          continue
-
-        if pizza[row][col] == lower_item:
-          print('found {} at {}:{}'.format(lower_item, row, col))
+    for row in range(self.r):
+      for col in range(self.c):
+        if self.pizza[row][col] == self.lower_item:
+          print('found {} at {}:{}'.format(self.lower_item, row, col))
           self.slices.append(self.make_slice(row, col))
+
+    print('slices: {}'.format(self.slices))
 
     
 if __name__ == "__main__":
