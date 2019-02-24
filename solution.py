@@ -3,6 +3,7 @@ To be implemented:
 - if there is a l violation on all 4 sides then what ?
 - Consider l values for higher item also
 - change input pizza to list of lists instead of list of strings
+- MODIFY HOW THE TOTAL SCORE IS CALCULATED
 '''
 
 import code
@@ -63,7 +64,7 @@ class Solution:
           continue
 
         if direction == 0:
-          print("went - top")
+          # print("went - top")
           # increase the row and then check if lower_item count satisfies
           new_row = self.pizza[corners[0][0] - 1][corners[0][1]:corners[1][1] + 1]
           new_row_lower_items, new_row_higher_items = new_row.count(self.lower_item), new_row.count(self.higher_item)
@@ -84,7 +85,7 @@ class Solution:
           self.pizza[corners[0][0]] = self.pizza[corners[0][0]][:corners[0][1]] + 'X' * len(new_row) + self.pizza[corners[0][0]][corners[1][1] + 1:]
           self.total_score += len(new_row)
         elif direction == 1:
-          print("went - right")
+          # print("went - right")
           #code.interact(local=dict(globals(), **locals()))
           new_col = [self.pizza[row][corners[1][1] + 1] for row in range(corners[1][0], corners[2][0] + 1)]
           new_col_lower_items, new_col_higher_items = new_col.count(self.lower_item), new_col.count(self.higher_item)
@@ -105,7 +106,7 @@ class Solution:
             self.pizza[row] = self.pizza[row][:-1] + 'X'
             self.total_score += 1
         elif direction == 2:
-          print("went - bottom")
+          # print("went - bottom")
           # increase the row and then check if lower_item count satisfies
           new_row = self.pizza[corners[2][0] + 1][corners[0][1]:corners[1][1] + 1]
           new_row_lower_items, new_row_higher_items = new_row.count(self.lower_item), new_row.count(self.higher_item)
@@ -125,7 +126,7 @@ class Solution:
           self.pizza[corners[3][0]] = self.pizza[corners[3][0]][:corners[3][1]] + 'X' * len(new_row) + self.pizza[corners[3][0]][corners[2][1] + 1:]
           self.total_score += len(new_row)
         elif direction == 3:
-          print("went - left")
+          # print("went - left")
           # check if lower item counts satisfy -- implement later
           # if less than l then take it -- implement later
           new_col = [self.pizza[row][corners[0][1] - 1] for row in range(corners[0][0], corners[3][0] + 1)]
@@ -147,13 +148,13 @@ class Solution:
             self.pizza[row] = 'X' + self.pizza[row][1:]
             self.total_score += 1
         
-        print('PIZZA - INSIDE: {}'.format(self.pizza))
+        # print('PIZZA - INSIDE: {}'.format(self.pizza))
     # check if lower item counts satisfy -- implemented later
     return [corners[0], corners[2]]
 
 
   def solve(self):
-    print("Solving for:\nr: {},\tc: {},\tl: {},\th: {}\npizza: {}\n".format(self.r, self.c, self.l, self.h, self.pizza))
+    # print("Solving for:\nr: {},\tc: {},\tl: {},\th: {}\npizza: {}\n".format(self.r, self.c, self.l, self.h, self.pizza))
 
     # Find limiting ingredient T or M -----
     number_of_T, number_of_M = 0, 0
@@ -176,12 +177,12 @@ class Solution:
     for row in range(self.r):
       for col in range(self.c):
         if self.pizza[row][col] == self.lower_item:
-          print('\nfound {} at {}:{}'.format(self.lower_item, row, col))
+          # print('\nfound {} at {}:{}'.format(self.lower_item, row, col))
           self.slices.append(self.make_slice(row, col))
-          print('piece: {}'.format(self.slices))
-          print('PIZZA: {}'.format(self.pizza))
+          # print('piece: {}'.format(self.slices))
+          # print('PIZZA: {}'.format(self.pizza))
 
-    print('slices: {}'.format(self.slices))
+    # print('slices: {}'.format(self.slices))
     
     print("\n\n-------------FINAL----------------")
     print("Final Score: {}".format(self.total_score))
