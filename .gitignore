@@ -1,4 +1,6 @@
 # keep just the folder
-outputs/**.*
-inputs/**.*
+outputs/*
+inputs/*
+!outputs/.keep
+!inputs/.keep
 .DS_Store
