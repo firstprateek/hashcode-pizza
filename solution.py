@@ -1,10 +1,10 @@
 '''
 Author: Prateek
-To be implemented:
+Note to me - To be implemented:
 - if there is a l violation on all 4 sides then what ?
 - Consider l values for higher item also
 - change input pizza to list of lists instead of list of strings
-- MODIFY HOW THE TOTAL SCORE IS CALCULATED X
+- MODIFY HOW THE TOTAL SCORE IS CALCULATED - done - X
 '''
 
 import code
@@ -21,7 +21,6 @@ class Solution:
     self.higher_item = 'X'
     self.lower_item_count = 0
     self.max_slices = 0
-    self.total_score = 0
     self.slices = []
 
   def make_slice(self, row, col):
@@ -80,10 +79,8 @@ class Solution:
           corners[1] = [corners[1][0] - 1, corners[1][1]]
 
           # set to X everyone in the new_row
-          # code.interact(local=dict(globals(), **locals()))
           self.pizza[corners[0][0]] = self.pizza[corners[0][0]][:corners[0][1]] + 'X' * len(new_row) + self.pizza[corners[0][0]][corners[1][1] + 1:]
         elif direction == 1:
-          #code.interact(local=dict(globals(), **locals()))
           new_col = [self.pizza[row][corners[1][1] + 1] for row in range(corners[1][0], corners[2][0] + 1)]
           new_col_lower_items, new_col_higher_items = new_col.count(self.lower_item), new_col.count(self.higher_item)
           visited = True if new_col.count('X') > 0 else False
@@ -168,12 +165,12 @@ class Solution:
         if self.pizza[row][col] == self.lower_item:
           self.slices.append(self.make_slice(row, col))
 
-    ts = 0
+    total_score = 0
     for x in range(self.r):
-      ts += self.pizza[x].count('X')
+      total_score += self.pizza[x].count('X')
 
     print("\n\n-------------FINAL----------------")
-    print("Final Score: {}".format(ts))
+    print("Final Score: {}".format(total_score))
     print("Max Possible Score: {}".format(self.r * self.c))
     print("------------------------------------\n\n")
     return self.slices
