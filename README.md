@@ -10,3 +10,4 @@ Solution for google hash code pizza division problem
 ### To run for multiple input files
 * Put as many input files you want to test inside the inputs folder
 * Run `sh run.sh`
+* Output for each input file will be generated inside the outputs folder
