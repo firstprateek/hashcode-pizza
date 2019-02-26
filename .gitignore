@@ -1,2 +1,8 @@
+# keep just the folder
 outputs/*
+!outputs/.gitkeep
+
+inputs/*
+!inputs/.gitkeep
+
 .DS_Store
