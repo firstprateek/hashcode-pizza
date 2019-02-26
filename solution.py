@@ -1,9 +1,10 @@
 '''
+Author: Prateek
 To be implemented:
 - if there is a l violation on all 4 sides then what ?
 - Consider l values for higher item also
 - change input pizza to list of lists instead of list of strings
-- MODIFY HOW THE TOTAL SCORE IS CALCULATED
+- MODIFY HOW THE TOTAL SCORE IS CALCULATED X
 '''
 
 import code
@@ -32,7 +33,6 @@ class Solution:
     count[self.lower_item] += 1
     self.pizza[row] = self.pizza[row][:col] + 'X' + self.pizza[row][col + 1:]
 
-    self.total_score += 1
     # step 2 exapnd around lower item until you satisfy l
     # mark areas already cut
     # try to maximise and reach h in a slice
@@ -64,7 +64,6 @@ class Solution:
           continue
 
         if direction == 0:
-          # print("went - top")
           # increase the row and then check if lower_item count satisfies
           new_row = self.pizza[corners[0][0] - 1][corners[0][1]:corners[1][1] + 1]
           new_row_lower_items, new_row_higher_items = new_row.count(self.lower_item), new_row.count(self.higher_item)
@@ -83,9 +82,7 @@ class Solution:
           # set to X everyone in the new_row
           # code.interact(local=dict(globals(), **locals()))
           self.pizza[corners[0][0]] = self.pizza[corners[0][0]][:corners[0][1]] + 'X' * len(new_row) + self.pizza[corners[0][0]][corners[1][1] + 1:]
-          self.total_score += len(new_row)
         elif direction == 1:
-          # print("went - right")
           #code.interact(local=dict(globals(), **locals()))
           new_col = [self.pizza[row][corners[1][1] + 1] for row in range(corners[1][0], corners[2][0] + 1)]
           new_col_lower_items, new_col_higher_items = new_col.count(self.lower_item), new_col.count(self.higher_item)
@@ -104,9 +101,7 @@ class Solution:
           # set to X everyone in the new_col
           for row in range(corners[1][0], corners[2][0] + 1):
             self.pizza[row] = self.pizza[row][:-1] + 'X'
-            self.total_score += 1
         elif direction == 2:
-          # print("went - bottom")
           # increase the row and then check if lower_item count satisfies
           new_row = self.pizza[corners[2][0] + 1][corners[0][1]:corners[1][1] + 1]
           new_row_lower_items, new_row_higher_items = new_row.count(self.lower_item), new_row.count(self.higher_item)
@@ -124,9 +119,7 @@ class Solution:
 
           # set to X everyone in the new_row
           self.pizza[corners[3][0]] = self.pizza[corners[3][0]][:corners[3][1]] + 'X' * len(new_row) + self.pizza[corners[3][0]][corners[2][1] + 1:]
-          self.total_score += len(new_row)
         elif direction == 3:
-          # print("went - left")
           # check if lower item counts satisfy -- implement later
           # if less than l then take it -- implement later
           new_col = [self.pizza[row][corners[0][1] - 1] for row in range(corners[0][0], corners[3][0] + 1)]
@@ -146,22 +139,19 @@ class Solution:
           # set to X everyone in the new_col
           for row in range(corners[0][0], corners[3][0] + 1):
             self.pizza[row] = 'X' + self.pizza[row][1:]
-            self.total_score += 1
         
-        # print('PIZZA - INSIDE: {}'.format(self.pizza))
     # check if lower item counts satisfy -- implemented later
     return [corners[0], corners[2]]
 
 
   def solve(self):
-    # print("Solving for:\nr: {},\tc: {},\tl: {},\th: {}\npizza: {}\n".format(self.r, self.c, self.l, self.h, self.pizza))
-
     # Find limiting ingredient T or M -----
     number_of_T, number_of_M = 0, 0
     for row in self.pizza:
       number_of_T += row.count('T')
       number_of_M += row.count('M')
 
+    # step 1 find a lower_item
     self.lower_item, self.higher_item = 'T', 'M'
     self.lower_item_count = number_of_T
     if number_of_M < number_of_T:
@@ -173,19 +163,17 @@ class Solution:
 
     self.max_slices = self.lower_item_count // self.l
 
-    # step 1 find a lower_item
     for row in range(self.r):
       for col in range(self.c):
         if self.pizza[row][col] == self.lower_item:
-          # print('\nfound {} at {}:{}'.format(self.lower_item, row, col))
           self.slices.append(self.make_slice(row, col))
-          # print('piece: {}'.format(self.slices))
-          # print('PIZZA: {}'.format(self.pizza))
 
-    # print('slices: {}'.format(self.slices))
-    
+    ts = 0
+    for x in range(self.r):
+      ts += self.pizza[x].count('X')
+
     print("\n\n-------------FINAL----------------")
-    print("Final Score: {}".format(self.total_score))
+    print("Final Score: {}".format(ts))
     print("Max Possible Score: {}".format(self.r * self.c))
     print("------------------------------------\n\n")
     return self.slices
@@ -198,6 +186,8 @@ if __name__ == "__main__":
     print("Provide input file as argument.")
     sys.exit()
 
+  output_file_path = "output.txt" if not sys.argv[2] else sys.argv[2]
+
   input_data = []
   with open(input_file_path, 'r') as f:
     input_data = f.readlines()
@@ -208,8 +198,10 @@ if __name__ == "__main__":
   result = solution.solve()
 
   # Write result to output file -----
-  with open("output.txt", 'w') as f:
+
+  with open(output_file_path, 'w') as f:
     f.write("{}\n".format(len(result)))
     for coord in result:
       f.write("{} {} {} {}\n".format(coord[0][0], coord[0][1], coord[1][0], coord[1][1]))
+  
   # ----- ----- ----- ----- ----- ----- -----
