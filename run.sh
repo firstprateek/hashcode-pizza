@@ -1,7 +1,7 @@
 #!/bin/bash
-declare -a input=("a_example.in" "b_small.in" "c_medium.in" "d_big.in")
 
-for file_name in input/*.in
-do
-  python3 solution.py "$file_name" "./output/output_$file_name"
+for file_path in inputs/*; do
+  input_file_name=$(basename $file_path)
+  output_file_name=${input_file_name%.*}
+  python3 solution.py "$file_path" "outputs/$output_file_name.out"
 done
